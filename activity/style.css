@@ -1,0 +1,69 @@
+/* Default styling */
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.menu {
+  height: 30px;
+  border: 1px solid;
+  display: flex;
+}
+
+.menu-options {
+  height: 50px;
+  border: 1px solid green;
+}
+
+.menu-row {
+  display: flex;
+  text-align: center;
+}
+
+.menu-options-item {
+  display: none;
+  width: 300px;
+}
+
+.menu-options-item.selected {
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.formula-bar {
+  height: 30px;
+  border: 1px solid blue;
+}
+
+.cell-container {
+  background-color: springgreen;
+  height: calc(100vh - 130px);
+  overflow: auto;
+  position: relative;
+}
+
+.cell-container > * {
+  position: absolute;
+  top: 0;
+}
+
+.sheets {
+  height: 20px;
+  border: 1px solid red;
+}
+
+.row {
+  display: flex;
+}
+
+.row .cell {
+  border: 1px solid teal;
+  min-height: 25px;
+  min-width: 88px;
+}
