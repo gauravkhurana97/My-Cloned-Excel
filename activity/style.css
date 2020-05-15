@@ -9,15 +9,15 @@ html {
   box-sizing: border-box;
 }
 
+.menu-options {
+  height: 50px;
+  border: 1px solid green;
+}
+
 .menu {
   height: 30px;
   border: 1px solid;
   display: flex;
-}
-
-.menu-options {
-  height: 50px;
-  border: 1px solid green;
 }
 
 .menu-row {
@@ -68,35 +68,46 @@ html {
   min-width: 88px;
 }
 
+.top-row {
+  display: flex;
+  background-color: lightcyan;
+  position: absolute;
+  top: 0;
+  left: 25px;
+}
 
+.top-left-cell {
+  height: 25px;
+  width: 25px;
+  border: 1px solid teal;
+  background-color: lightcyan;
+}
 
-.top-row{
-    display: flex;
-    background-color: lightcyan;
-    position: absolute;
-    top: 0px;
-    left: 25px;
+.left-col {
+  width: 25px;
+  background-color: lightcyan;
+  border: 1px solid teal;
+  top: 25px;
 }
-.left-col{
-    width: 25px;
-    background-color: lightcyan;
-    border: 1px solid teal;
-    top: 25px;
+
+.top-row .cell {
+  border: 1px solid teal;
+  min-height: 25px;
+  min-width: 88px;
+  text-align: center;
 }
-.top-row .cell{
-    border: 1px solid teal;
-    min-height: 25px;
-    min-width: 88px;
-    text-align: center;
+
+.left-col .cell {
+  border: 1px solid cyan;
+  height: 25px;
+  width: 25px;
 }
-.left-col .cell{
-border:1px solid cyan;
-height:25px;
-width:25px;
+
+.grid {
+  top: 25px;
+  left: 25px;
 }
-.top-left-cell{
-    height: 25px;
-    width: 25px;
-    border: 1px solid teal;
-    background-color: lightcyan;
+
+.menu-row input[type="button"].selected {
+  background-color: gray;
 }
