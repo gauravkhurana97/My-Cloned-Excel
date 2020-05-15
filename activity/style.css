@@ -67,3 +67,36 @@ html {
   min-height: 25px;
   min-width: 88px;
 }
+
+
+
+.top-row{
+    display: flex;
+    background-color: lightcyan;
+    position: absolute;
+    top: 0px;
+    left: 25px;
+}
+.left-col{
+    width: 25px;
+    background-color: lightcyan;
+    border: 1px solid teal;
+    top: 25px;
+}
+.top-row .cell{
+    border: 1px solid teal;
+    min-height: 25px;
+    min-width: 88px;
+    text-align: center;
+}
+.left-col .cell{
+border:1px solid cyan;
+height:25px;
+width:25px;
+}
+.top-left-cell{
+    height: 25px;
+    width: 25px;
+    border: 1px solid teal;
+    background-color: lightcyan;
+}
