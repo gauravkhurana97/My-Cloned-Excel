@@ -38,6 +38,13 @@ $(document).ready(
             $($("#grid .cell")[0]).trigger("click");
         })
 
+        $("#Save").on("click", async function () {
+            let sdb = await dialog.showOpenDialog();
+            let jsonData = JSON.stringify(db);
+            fs.writeFileSync(sdb.filePaths[0], jsonData);
+            console.log("File Saved")
+        })
+
         function init() {
             $("#New").trigger("click");
         }
