@@ -45,6 +45,22 @@ $(document).ready(
             console.log("File Saved")
         })
 
+        $("#Open").on("click", async function () {
+            let sdb = await dialog.showOpenDialog();
+            let buffContent = fs.readFileSync(sdb.filePaths[0]);
+            db = JSON.parse(buffContent);
+
+            let rows = $("#grid").find(".row");
+            for (let i = 0; i < rows.length; i++) {
+                let cells = $(rows[i]).find(".cell");
+
+                for (let j = 0; j < cells.length; j++) {
+                    $(cells[j]).html(db[i][j].value);
+                }
+            }
+            console.log("File Opened");
+        })
+
         function init() {
             $("#New").trigger("click");
         }
