@@ -61,6 +61,17 @@ $(document).ready(
             console.log("File Opened");
         })
 
+        function getRcFAddr(cellAddress) {
+            let colId = cellAddress.charCodeAt(0) - 65;
+
+            let row = cellAddress.substring(1);
+            let rowId = Number(row) - 1;
+            return {
+                colId,
+                rowId
+            };
+        }
+
         function init() {
             $("#New").trigger("click");
         }
