@@ -71,6 +71,27 @@ $(document).ready(
                 rowId
             };
         }
+        // Update
+        // => when you enter anything who shoul put an entry inside db 
+        $("#grid .cell").on("keyup", function () {
+
+            let ri = Number($(this).attr("ri"));
+            let ci = Number($(this).attr("ci"));
+            let cellObject = getCellObject(ri, ci);
+
+            // if ($(this).html() == cellObject.value) {
+            //     return;
+            // },
+            if (cellObject.formula) {
+                removeFormula(cellObject, ri, ci);
+            }
+
+            // console.log(ri + " " + ci)
+            // db[ri][ci].value = $(this).html();
+            updateCell(ri, ci, $(this).html())
+            // console.log(db);
+        })
+
 
         function init() {
             $("#New").trigger("click");
