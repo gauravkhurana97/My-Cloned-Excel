@@ -92,6 +92,57 @@ $(document).ready(
             // console.log(db);
         })
 
+        $("#formula-input").on("blur", function () {
+            let cellAddress = $("#address-input").val();
+            let {
+                rowId,
+                colId
+            } = getRcFAddr(cellAddress);
+            let cellObject = getCellObject(rowId, colId);
+            // set formula property
+            // i 
+            // isFormulaValid($(this).html(), cellObject)
+
+            if (cellObject.formula == $(this).val()) {
+                return;
+            }
+
+            if (cellObject.formula) {
+                removeFormula(cellObject, rowId, colId)
+            }
+
+            cellObject.formula = $(this).val();
+            // evaluate formula
+            let rVal = evaluate(cellObject);
+
+            setupFormula(rowId, colId, cellObject.formula);
+            updateCell(rowId, colId, rVal);
+        })
+
+        function evaluate(cellObject) {
+            // ( A1 + A2 )
+            let formula = cellObject.formula;
+            console.log(formula);
+            let formulaComponent = formula.split(" ");
+            // ["(","A1",+,"A2",")"]
+            for (let i = 0; i < formulaComponent.length; i++) {
+                let code = formulaComponent[i].charCodeAt(0);
+                // if cell
+                if (code >= 65 && code <= 90) {
+                    let parent = getRcFAddr(formulaComponent[i]);
+                    let parentObj = db[parent.rowId][parent.colId];
+                    let value = parentObj.value;
+                    formula = formula.replace(formulaComponent[i], value);
+                }
+            }
+            // (10 + 20 ) 
+            console.log(formula);
+            // infix evaluation
+            let rVal = eval(formula);
+            console.log(rVal);
+            return rVal;
+
+        }
 
         function init() {
             $("#New").trigger("click");
