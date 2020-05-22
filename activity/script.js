@@ -58,11 +58,13 @@ $(document).ready(
         });
 
         $("#Save").on("click", async function () {
+            // first time save / file name =? create => data save
+            //
             let sdb = await dialog.showOpenDialog();
             let jsonData = JSON.stringify(db);
             fs.writeFileSync(sdb.filePaths[0], jsonData);
-            console.log("File Saved")
-        })
+            console.log("File Saved");
+        });
 
         $("#Open").on("click", async function () {
             let sdb = await dialog.showOpenDialog();
@@ -74,11 +76,24 @@ $(document).ready(
                 let cells = $(rows[i]).find(".cell");
 
                 for (let j = 0; j < cells.length; j++) {
-                    $(cells[j]).html(db[i][j].value);
+                    let cell = db[i][j];
+                    $(cells[j]).html("");
+                    $(cells[j]).html(cell.value);
+                    $(cells[j]).css("font-family", cell.fontFamily);
+                    $(cells[j]).css("font-size", cell.fontSize + "px");
+                    $(cells[j]).css("font-weight", cell.bold ? "bolder" : "normal");
+                    $(cells[j]).css(
+                        "text-decoration",
+                        cell.underline ? "underline" : "none"
+                    );
+                    $(cells[j]).css("font-style", cell.italic ? "italic" : "normal");
+                    $(cells[j]).css("background-color", cell.bgColor);
+                    $(cells[j]).css("color", cell.textColor);
+                    $(cells[j]).css("text-align", cell.halign);
                 }
             }
             console.log("File Opened");
-        })
+        });
 
         function getRcFAddr(cellAddress) {
             let colId = cellAddress.charCodeAt(0) - 65;
