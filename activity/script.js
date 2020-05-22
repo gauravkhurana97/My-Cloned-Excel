@@ -22,21 +22,40 @@ $(document).ready(
                 let cells = $(rows[i]).find(".cell");
                 let row = [];
                 for (let j = 0; j < cells.length; j++) {
-                    $(cells[j]).html("");
-
                     let cell = {
                         value: "",
                         formula: "",
                         downstream: [],
-                        upstream: []
-                    }
+                        upstream: [],
+                        fontFamily: "Arial",
+                        fontSize: 12,
+                        bold: false,
+                        underline: false,
+                        italic: false,
+                        bgColor: "#FFFFFF",
+                        textColor: "#000000",
+                        halign: "left",
+                    };
+                    $(cells[j]).html("");
+                    $(cells[j]).html(cell.value);
+                    $(cells[j]).css("font-family", cell.fontFamily);
+                    $(cells[j]).css("font-size", cell.fontSize + "px");
+                    $(cells[j]).css("font-weight", cell.bold ? "bolder" : "normal");
+                    $(cells[j]).css(
+                        "text-decoration",
+                        cell.underline ? "underline" : "none"
+                    );
+                    $(cells[j]).css("font-style", cell.italic ? "italic" : "normal");
+                    $(cells[j]).css("background-color", cell.bgColor);
+                    $(cells[j]).css("color", cell.textColor);
+                    $(cells[j]).css("text-align", cell.halign);
                     row.push(cell);
                 }
                 db.push(row);
             }
             console.log(db);
             $($("#grid .cell")[0]).trigger("click");
-        })
+        });
 
         $("#Save").on("click", async function () {
             let sdb = await dialog.showOpenDialog();
@@ -160,8 +179,9 @@ $(document).ready(
             }
         }
 
-
-
+        function getCellObject(rowId, colId) {
+            return db[rowId][colId];
+        }
 
 
         function init() {
