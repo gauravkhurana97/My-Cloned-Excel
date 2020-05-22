@@ -92,18 +92,7 @@ $(document).ready(
             // console.log(db);
         })
 
-        function updateCell(rowId, colId, rVal) {
-            let cellObject = getCellObject(rowId, colId);
-            cellObject.value = rVal;
-            $(`#grid .cell[ri=${rowId}][ci=${colId}]`).html(rVal);
 
-            for (let i = 0; i < cellObject.downstream.length; i++) {
-                let sdsorc = cellObject.downstream[i];
-                let fdso = getCellObject(sdsorc.rowId, sdsorc.colId);
-                let rVal = evaluate(fdso);
-                updateCell(sdsorc.rowId, sdsorc.colId, rVal)
-            }
-        }
 
 
         $("#formula-input").on("blur", function () {
@@ -156,6 +145,19 @@ $(document).ready(
             console.log(rVal);
             return rVal;
 
+        }
+
+        function updateCell(rowId, colId, rVal) {
+            let cellObject = getCellObject(rowId, colId);
+            cellObject.value = rVal;
+            $(`#grid .cell[ri=${rowId}][ci=${colId}]`).html(rVal);
+
+            for (let i = 0; i < cellObject.downstream.length; i++) {
+                let sdsorc = cellObject.downstream[i];
+                let fdso = getCellObject(sdsorc.rowId, sdsorc.colId);
+                let rVal = evaluate(fdso);
+                updateCell(sdsorc.rowId, sdsorc.colId, rVal)
+            }
         }
 
 
