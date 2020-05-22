@@ -194,12 +194,38 @@ $(document).ready(
             }
         }
 
+
+        function removeFormula(cellObject, rowId, colId) {
+            // delete yourself from parent's downstream
+            for (let i = 0; i < cellObject.upstream.length; i++) {
+                let suso = cellObject.upstream[i];
+                let fuso = getCellObject(suso.rowId, suso.colId);
+                let fupArr = [];
+                for (let j = 0; j < fuso.downstream.length; j++) {
+                    let rc = fuso.downstream[j];
+                    if (!(rc.rowId == rowId && rc.colId == colId)) {
+                        fupArr.push(rc);
+                    }
+                }
+                fuso.downstream = fupArr;
+            }
+            // remove formula
+            cellObject.formula = "";
+            // clear upstream
+            cellObject.upstream = [];
+        }
+
+
         function getCellObject(rowId, colId) {
             return db[rowId][colId];
         }
 
 
+
+
+
         function init() {
+            $("#File").trigger("click");
             $("#New").trigger("click");
         }
         init()
