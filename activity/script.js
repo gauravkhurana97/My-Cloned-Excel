@@ -4,6 +4,16 @@ const dialog = require("electron").remote.dialog;
 $(document).ready(
     function () {
         let db;
+
+        let lsc;
+        // ***************Formatting and functionality
+        $(".menu >*").on("click", function () {
+            let id = $(this).attr("id");
+            $(".menu-options-item").removeClass("selected");
+            $(`#${id}-menu-options`).addClass("selected");
+        });
+
+
         $("#grid .cell").on("click", function () {
             // let cCell=this
             let ri = Number($(this).attr("ri"));
@@ -105,29 +115,26 @@ $(document).ready(
                 rowId
             };
         }
-        // Update
-        // => when you enter anything who shoul put an entry inside db 
-        $("#grid .cell").on("keyup", function () {
 
+        // *************************Formula*******************************
+        // => when you enter anything who shoul put an entry inside db
+        $("#grid .cell").on("blur", function () {
             let ri = Number($(this).attr("ri"));
             let ci = Number($(this).attr("ci"));
             let cellObject = getCellObject(ri, ci);
 
-            // if ($(this).html() == cellObject.value) {
-            //     return;
-            // },
+            if ($(this).html() == cellObject.value) {
+                return;
+            }
             if (cellObject.formula) {
                 removeFormula(cellObject, ri, ci);
             }
 
             // console.log(ri + " " + ci)
             // db[ri][ci].value = $(this).html();
-            updateCell(ri, ci, $(this).html())
+            updateCell(ri, ci, $(this).html());
             // console.log(db);
-        })
-
-
-
+        });
 
         $("#formula-input").on("blur", function () {
             let cellAddress = $("#address-input").val();
@@ -137,7 +144,7 @@ $(document).ready(
             } = getRcFAddr(cellAddress);
             let cellObject = getCellObject(rowId, colId);
             // set formula property
-            // i 
+            // i
             // isFormulaValid($(this).html(), cellObject)
 
             if (cellObject.formula == $(this).val()) {
@@ -145,16 +152,39 @@ $(document).ready(
             }
 
             if (cellObject.formula) {
-                removeFormula(cellObject, rowId, colId)
+                removeFormula(cellObject, rowId, colId);
             }
-
             cellObject.formula = $(this).val();
             // evaluate formula
             let rVal = evaluate(cellObject);
 
             setupFormula(rowId, colId, cellObject.formula);
             updateCell(rowId, colId, rVal);
-        })
+        });
+
+        function setupFormula(rowId, colId, formula) {
+            // ( A1 + A2 )
+            let cellObject = getCellObject(rowId, colId);
+            let formulaComponent = formula.split(" ");
+            // [(,A1,+A2,)]
+            for (let i = 0; i < formulaComponent.length; i++) {
+                let code = formulaComponent[i].charCodeAt(0);
+                // if cell
+                if (code >= 65 && code <= 90) {
+                    let parent = getRcFAddr(formulaComponent[i]);
+                    let parentObj = db[parent.rowId][parent.colId];
+
+                    parentObj.downstream.push({
+                        rowId: rowId,
+                        colId: colId,
+                    });
+                    cellObject.upstream.push({
+                        rowId: parent.rowId,
+                        colId: parent.colId,
+                    });
+                }
+            }
+        }
 
         function evaluate(cellObject) {
             // ( A1 + A2 )
@@ -172,13 +202,12 @@ $(document).ready(
                     formula = formula.replace(formulaComponent[i], value);
                 }
             }
-            // (10 + 20 ) 
+            // (10 + 20 )
             console.log(formula);
             // infix evaluation
             let rVal = eval(formula);
             console.log(rVal);
             return rVal;
-
         }
 
         function updateCell(rowId, colId, rVal) {
@@ -190,7 +219,7 @@ $(document).ready(
                 let sdsorc = cellObject.downstream[i];
                 let fdso = getCellObject(sdsorc.rowId, sdsorc.colId);
                 let rVal = evaluate(fdso);
-                updateCell(sdsorc.rowId, sdsorc.colId, rVal)
+                updateCell(sdsorc.rowId, sdsorc.colId, rVal);
             }
         }
 
@@ -219,10 +248,6 @@ $(document).ready(
         function getCellObject(rowId, colId) {
             return db[rowId][colId];
         }
-
-
-
-
 
         function init() {
             $("#File").trigger("click");
