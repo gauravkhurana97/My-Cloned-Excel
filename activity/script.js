@@ -13,6 +13,32 @@ $(document).ready(
             $(`#${id}-menu-options`).addClass("selected");
         });
 
+        $("#font-family").on("change", function () {
+            let fontFamily = $(this).val();
+
+            let cell = $("#grid .cell.selected");
+            $(cell).css("font-family", fontFamily);
+
+            let rid = parseInt($(cell).attr("ri"));
+            let cid = parseInt($(cell).attr("ci"));
+
+            db[rid][cid].fontFamily = fontFamily;
+        });
+
+
+        $("#font-size").on("change", function () {
+            let fontSize = $(this).val();
+
+            let cell = $("#grid .cell.selected");
+
+            $(cell).css("font-size", fontSize + "px");
+
+            let rid = parseInt($(cell).attr("ri"));
+            let cid = parseInt($(cell).attr("ci"));
+
+            db[rid][cid].fontSize = fontSize;
+        });
+        
 
         $("#grid .cell").on("click", function () {
             // let cCell=this
@@ -22,7 +48,31 @@ $(document).ready(
             let cellObject = getCellObject(ri, ci);
             $("#address-input").val(Address);
             $("#formula-input").val(cellObject.formula);
-        })
+            $(this).addClass("selected");
+            if (lsc && lsc != this) $(lsc).removeClass("selected");
+            lsc = this;
+            if (cellObject.bold) {
+                $("#bold").addClass("selected");
+            } else {
+                $("#bold").removeClass("selected");
+            }
+
+            if (cellObject.underline) {
+                $("#underline").addClass("selected");
+            } else {
+                $("#underline").removeClass("selected");
+            }
+
+            if (cellObject.italic) {
+                $("#italic").addClass("selected");
+            } else {
+                $("#italic").removeClass("selected");
+            }
+            // $('#bg-color').val(cellObject.bgColor);
+            // $('#text-color').val(cellObject.textColor);
+            // $('[halign]').removeClass('selected');
+            // $('[halign=' + cellObject.halign + ']').addClass('selected');
+        });
 
         // New click=> Ui and DB 
         $("#New").on("click", function () {
