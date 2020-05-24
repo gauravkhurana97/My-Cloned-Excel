@@ -25,6 +25,43 @@ $(document).ready(
             db[rid][cid].fontFamily = fontFamily;
         });
 
+        $("#bold").on("click", function () {
+            $(this).toggleClass("selected");
+            let bold = $(this).hasClass("selected");
+            let cell = $("#grid .cell.selected");
+            $(cell).css("font-weight", bold ? "bolder" : "normal");
+
+            let rid = parseInt($(cell).attr("ri"));
+            let cid = parseInt($(cell).attr("ci"));
+
+            db[rid][cid].bold = bold;
+        });
+
+        $("#underline").on("click", function () {
+            $(this).toggleClass("selected");
+            let underline = $(this).hasClass("selected");
+
+            let cell = $("#grid .cell.selected");
+            $(cell).css("text-decoration", underline ? "underline" : "none");
+
+            let rid = parseInt($(cell).attr("ri"));
+            let cid = parseInt($(cell).attr("ci"));
+
+            db[rid][cid].underline = underline;
+        });
+
+        $("#italic").on("click", function () {
+            $(this).toggleClass("selected");
+            let italic = $(this).hasClass("selected");
+
+            let cell = $("#grid .cell.selected");
+            $(cell).css("font-style", italic ? "italic" : "normal");
+
+            let rid = parseInt($(cell).attr("ri"));
+            let cid = parseInt($(cell).attr("ci"));
+
+            db[rid][cid].italic = italic;
+        });
 
         $("#font-size").on("change", function () {
             let fontSize = $(this).val();
@@ -38,7 +75,7 @@ $(document).ready(
 
             db[rid][cid].fontSize = fontSize;
         });
-        
+
 
         $("#grid .cell").on("click", function () {
             // let cCell=this
