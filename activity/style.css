@@ -12,12 +12,20 @@ html {
 .menu-options {
   height: 50px;
   border: 1px solid green;
+  display: flex;
+  align-items: center;
+}
+
+#File {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .menu {
-  height: 30px;
+  height: 40px;
   border: 1px solid;
   display: flex;
+  align-items: center
 }
 
 .menu-row {
@@ -36,9 +44,26 @@ html {
 
 }
 
+#New {
+  margin-left: -5px;
+}
+
 .formula-bar {
-  height: 30px;
+  height: 40px;
   border: 1px solid blue;
+  align-items: center;
+  display: flex;
+}
+
+#address-input {
+  width: 50px;
+  margin-left: 10px;
+  margin-right: 20px;
+  border: 2px solid black;
+}
+
+#formula-input {
+  border: 2px solid black;
 }
 
 .cell-container {
@@ -48,7 +73,7 @@ html {
   position: relative;
 }
 
-.cell-container > * {
+.cell-container>* {
   position: absolute;
   top: 0;
 }
