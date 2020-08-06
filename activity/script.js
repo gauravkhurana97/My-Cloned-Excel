@@ -224,7 +224,10 @@ $(document).ready(function () {
 
   $("#formula-input").on("blur", function () {
     let cellAddress = $("#address-input").val();
-    let { rowId, colId } = getRcFAddr(cellAddress);
+    let {
+      rowId,
+      colId
+    } = getRcFAddr(cellAddress);
     let cellObject = getCellObject(rowId, colId);
     // set formula property
     // i
