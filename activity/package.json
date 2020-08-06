@@ -26,7 +26,7 @@
       "output": "build "
     },
     "nsis": {
-      "allowToCangeInstallationDirctory": true,
+      "allowTonCangeInstallationDirctory": true,
       "oneClick": "false"
     }
   }
