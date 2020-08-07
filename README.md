@@ -1,6 +1,6 @@
 # Excel Cloning
 
-    Cross PlatForm DeskTop Application build using Electron.js. It combines the Chromium rendering engine and the Node.js runtime
+    It simulate limited functionality of Microsoft Excel.Cross PlatForm DeskTop Application build using Electron.js. It combines the Chromium rendering engine and the Node.js runtime
 
 ## Features
 
